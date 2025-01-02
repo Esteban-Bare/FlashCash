@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Transaction</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h2>Send Money to Friend</h2>
+    <form th:action="@{/transactions/send}" th:object="${transaction}" method="post">
+        <div class="mb-3">
+            <label for="senderAccount" class="form-label">Your Account</label>
+            <select id="senderAccount" name="senderAccount" class="form-select" required>
+                <option th:each="account : ${userAccounts}" th:value="${account.id}" th:text="${account.iban}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="receiverAccount" class="form-label">Select Friend's Account</label>
+            <select id="receiverAccount" name="receiverAccount" class="form-select" required>
+                <option th:each="account : ${friendAccounts}" th:value="${account.id}" th:text="${account.iban}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input type="number" id="amount" name="amount" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input type="text" id="description" name="description" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+</div>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

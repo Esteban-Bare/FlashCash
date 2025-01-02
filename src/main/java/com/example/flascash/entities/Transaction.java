@@ -1,7 +1,6 @@
 package com.example.flascash.entities;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,12 +10,12 @@ public class Transaction {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "sender_user_id")
-    private User sender;
+    @JoinColumn(name = "sender_account_id")
+    private Account senderAccount;
 
     @ManyToOne
-    @JoinColumn(name = "receiver_user_id")
-    private User receiver;
+    @JoinColumn(name = "receiver_account_id")
+    private Account receiverAccount;
 
     @Column(nullable = false)
     private Double amount;
@@ -32,9 +31,9 @@ public class Transaction {
 
     public Transaction() {}
 
-    public Transaction(User sender, User receiver, Double amount, LocalDateTime date, String description) {
-        this.sender = sender;
-        this.receiver = receiver;
+    public Transaction(Account senderAccount, Account receiverAccount, Double amount, LocalDateTime date, String description) {
+        this.senderAccount = senderAccount;
+        this.receiverAccount = receiverAccount;
         this.amount = amount;
         this.date = date;
         this.description = description;
@@ -48,20 +47,20 @@ public class Transaction {
         this.id = id;
     }
 
-    public User getSender() {
-        return sender;
+    public Account getSenderAccount() {
+        return senderAccount;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
+    public void setSenderAccount(Account senderAccount) {
+        this.senderAccount = senderAccount;
     }
 
-    public User getReceiver() {
-        return receiver;
+    public Account getReceiverAccount() {
+        return receiverAccount;
     }
 
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
+    public void setReceiverAccount(Account receiverAccount) {
+        this.receiverAccount = receiverAccount;
     }
 
     public Double getAmount() {

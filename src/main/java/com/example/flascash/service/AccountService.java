@@ -7,6 +7,8 @@ import com.example.flascash.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountService {
     @Autowired
@@ -32,6 +34,11 @@ public class AccountService {
 
     public void addMoney(double money, Account account) {
         account.setBalance(account.getBalance() + money);
+        accountRepository.save(account);
+    }
+
+    public void removeMoney(double money, Account account) {
+        account.setBalance(account.getBalance() - money);
         accountRepository.save(account);
     }
 }
