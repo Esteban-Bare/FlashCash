@@ -55,4 +55,8 @@ public class FriendshipService {
     public List<User> getUserFriends(Long userId) {
         return friendshipRepository.findFriendsByUserId(userId);
     }
+
+    public List<Long> getFriendIds(Long userId) {
+        return friendshipRepository.findAllFriendsForUser(userId).stream().map(User::getId).toList();
+    }
 }
