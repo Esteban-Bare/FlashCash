@@ -5,6 +5,22 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@NamedStoredProcedureQuery(
+        name = "findFriendByUserID",
+        procedureName = "findFriendByUserID",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "id", type = Integer.class)
+        },
+        resultClasses = User.class
+)
+@NamedStoredProcedureQuery(
+        name = "findAllFriendsForUser",
+        procedureName = "findAllFriends",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "userId", type = Long.class)
+        },
+        resultClasses = User.class
+)
 @Table(name = "friendship", schema = "flashcash",uniqueConstraints = {
         @UniqueConstraint(columnNames = {"user_id","friend_user_id"})
 })

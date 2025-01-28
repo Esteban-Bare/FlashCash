@@ -1,13 +1,17 @@
 package com.example.flascash.controller;
 
+import com.example.flascash.DTO.AccountDTO;
+import com.example.flascash.Validation.ValidIban;
 import com.example.flascash.entities.Account;
 import com.example.flascash.entities.User;
 import com.example.flascash.service.AccountService;
 import com.example.flascash.service.SessionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -27,10 +31,17 @@ public class AccountController {
     }
 
     @PostMapping(path = "/add")
-    public String addAccount(@RequestParam String iban, Model model) {
+    public String addAccount(@ModelAttribute @Valid AccountDTO accountDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("error", "Invalid IBAN format");
+            User user = sessionService.sessionUser();
+            model.addAttribute("accounts", user.getAccounts());
+            return "account/accounts";
+        }
+
         try {
             User user = sessionService.sessionUser();
-            accountService.saveAccount(iban, user);
+            accountService.saveAccount(accountDTO.getIban(), user);
             model.addAttribute("accounts", user.getAccounts());
             model.addAttribute("success", true);
             return "account/accounts";
@@ -41,6 +52,7 @@ public class AccountController {
             return "account/accounts";
         }
     }
+
 
 
     @GetMapping(path = "/show-add/balance/{id}")

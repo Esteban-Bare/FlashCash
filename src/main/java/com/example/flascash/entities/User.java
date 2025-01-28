@@ -1,11 +1,20 @@
 package com.example.flascash.entities;
 
+import com.example.flascash.Validation.StrongPassword;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+//@NamedStoredProcedureQuery(
+//        name = "findFriendByUserID",
+//        procedureName = "findFriendByUserID",
+//        parameters = {
+//                @StoredProcedureParameter(mode = ParameterMode.IN, name = "id", type = Integer.class)
+//        },
+//        resultClasses = User.class
+//)
 @Table(name = "user", schema = "flashcash")
 public class User {
     @Id
@@ -16,6 +25,7 @@ public class User {
     private String email;
 
     @Column(nullable = false)
+    @StrongPassword
     private String password;
 
     @Column(nullable = false, unique = true)

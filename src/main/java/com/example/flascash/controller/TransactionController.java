@@ -77,4 +77,14 @@ public class TransactionController {
             return "redirect:/transactions/send/" + transaction.getReceiverAccount().getUser().getId();
         }
     }
+
+    @GetMapping(path = "/history")
+    public String getTransactionHistory(Model model) {
+        List<Transaction> transactions = transactionService.findByUser(sessionService.sessionUser().getId());
+        Long userId = sessionService.sessionUser().getId();
+        model.addAttribute("userId", userId);
+        model.addAttribute("transactions", transactions);
+        return "transactions";
+        System.out.println();
+    }
 }

@@ -4,6 +4,14 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@NamedStoredProcedureQuery(
+        name = "findByUser",
+        procedureName = "findTransactionsByUserId",
+        resultClasses = {Transaction.class},
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = Long.class)
+        }
+)
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

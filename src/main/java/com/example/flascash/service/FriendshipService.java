@@ -7,6 +7,7 @@ import com.example.flascash.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,13 +24,9 @@ public class FriendshipService {
         return friendshipRepository.findAll();
     }
 
+    @Transactional
     public List<User> getAllFriends(Long userId) {
-        try {
-            return friendshipRepository.findAllFriendsForUser(userId);
-        } catch (Exception e) {
-            // Fallback to native query if JPQL fails
-            return friendshipRepository.findAllFriendsForUser(userId);
-        }
+        return friendshipRepository.findAllFriendsForUser(userId);
     }
 
     public Friendship createFriendship(Long userId, Long friendId) {
@@ -52,7 +49,7 @@ public class FriendshipService {
         return friendshipRepository.save(friendship);
     }
 
-    public List<User> getUserFriends(Long userId) {
+    public List<User> getUserFriends(int userId) {
         return friendshipRepository.findFriendsByUserId(userId);
     }
 
