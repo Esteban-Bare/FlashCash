@@ -85,6 +85,5 @@ public class TransactionController {
         model.addAttribute("userId", userId);
         model.addAttribute("transactions", transactions);
         return "transactions";
-        System.out.println();
     }
 }
