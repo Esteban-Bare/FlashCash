@@ -1,5 +1,6 @@
 ```mermaid
-USER {
+erDiagram
+    USER {
         bigint id PK "AUTO_INCREMENT"
         varchar(255) email "UNIQUE"
         varchar(255) password
